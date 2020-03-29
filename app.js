@@ -2,9 +2,11 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const shopRoutes = require('./routes/shopRoutes');
+const userRoutes = require('./routes/userRoutes');
 const errorController = require('./controllers/errorController');
 const ErrorResponse = require('./helpers/ErrorResponse');
 
+app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
@@ -14,6 +16,7 @@ app.use(express.static(`${__dirname}/public`));
 
 // Mounting routes
 app.use('/api/v1/shops', shopRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // Unhandled routes
 app.all('*', async (req, res, next) => {
