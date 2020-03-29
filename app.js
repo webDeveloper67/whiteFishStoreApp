@@ -6,7 +6,10 @@ const userRoutes = require('./routes/userRoutes');
 const errorController = require('./controllers/errorController');
 const ErrorResponse = require('./helpers/ErrorResponse');
 
+// to parse the body of req
 app.use(express.json());
+
+// show logs to the console
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
