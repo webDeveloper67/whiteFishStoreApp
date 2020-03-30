@@ -5,6 +5,7 @@ const shopController = require('./../controllers/shopController');
 const router = express.Router();
 
 router.route('/').get(shopController.getAllShops);
+router.route('/defaultphoto').get(shopController.defaultPhoto);
 
 router
   .route('/by/:userId')
@@ -22,7 +23,16 @@ router
     authController.protect,
     shopController.isOwner,
     shopController.updateShop
+  )
+  .delete(
+    authController.protect,
+    shopController.isOwner,
+    shopController.deleteShop
   );
+
+router
+  .route('/logo/:shopId')
+  .get(shopController.photo, shopController.defaultPhoto);
 
 router.param('shopId', shopController.shopByID);
 router.param('userId', userController.userByID);

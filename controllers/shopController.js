@@ -1,9 +1,12 @@
 const fs = require('fs');
+const path = require('path');
 const _ = require('lodash');
 const formidable = require('formidable');
 const asyncMiddleware = require('./../helpers/asyncMiddleware');
 const ErrorResponse = require('./../helpers/ErrorResponse');
 const Shop = require('./../models/Shop');
+const shopImage = './public/img/no-image-icon.png';
+const resolvedImg = path.resolve(shopImage);
 
 // CREATE a SHOP
 exports.createShop = asyncMiddleware((req, res, next) => {
@@ -88,6 +91,33 @@ exports.updateShop = asyncMiddleware((req, res, next) => {
     return res.status(200).json(updatedShop);
   });
 });
+
+// Delete a SHOP vis its id
+exports.deleteShop = asyncMiddleware(async (req, res, next) => {
+  let shop = req.shop;
+
+  shop.remove((err, deletedShop) => {
+    if (err || !shop) {
+      return next(new ErrorResponse('shop can not be found!!', 400));
+    }
+
+    res.json(deletedShop);
+  });
+});
+
+// PHOTo for shops
+exports.photo = (req, res, next) => {
+  if (req.shop.shopImg.data) {
+    res.set('Content-Type', req.shop.shopImg.contentType);
+    return res.send(req.shop.shopImg.data);
+  }
+  next();
+};
+
+// default PHOTO for shops without defined Image
+exports.defaultPhoto = (req, res) => {
+  return res.sendFile(resolvedImg);
+};
 
 // isOwner middleware for comparing req.shop.owner._id with req.user._id
 exports.isOwner = (req, res, next) => {
