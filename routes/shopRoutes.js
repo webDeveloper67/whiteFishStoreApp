@@ -1,7 +1,7 @@
 const express = require('express');
-const shopController = require('./../controllers/shopController');
-const authController = require('./../controllers/authController');
 const userController = require('./../controllers/userController');
+const authController = require('./../controllers/authController');
+const shopController = require('./../controllers/shopController');
 const router = express.Router();
 
 router.route('/').get(shopController.getAllShops);
@@ -12,6 +12,16 @@ router
     authController.protect,
     userController.isSeller,
     shopController.createShop
+  )
+  .get(authController.protect, shopController.listShopByOwner);
+
+router
+  .route('/:shopId')
+  .get(shopController.readShop)
+  .put(
+    authController.protect,
+    shopController.isOwner,
+    shopController.updateShop
   );
 
 router.param('shopId', shopController.shopByID);
