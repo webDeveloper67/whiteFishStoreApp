@@ -8,7 +8,7 @@ const shopSchema = new Schema({
     trim: true,
     required: [true, 'Shop Name is required']
   },
-  image: {
+  shopImg: {
     data: Buffer,
     contentType: String
   },
