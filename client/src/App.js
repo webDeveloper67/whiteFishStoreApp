@@ -14,6 +14,10 @@ import ReduxToastr from 'react-redux-toastr';
 
 // LAYOUT
 import Landing from './landing/LandingPage';
+import Menu from './layout/Menu';
+
+// AUTH
+import Register from './auth/Register';
 
 const theme = createMuiTheme({
   palette: {
@@ -40,12 +44,16 @@ const App = () => {
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
         <Router>
+          <Menu />
           <Route exact path="/" component={Landing} />
           <ReduxToastr
             position="bottom-right"
             transitionIn="fadeIn"
             transitionOut="fadeOut"
           />
+          <Switch>
+            <Route exact path="/signup" component={Register} />
+          </Switch>
         </Router>
       </MuiThemeProvider>
     </Provider>
