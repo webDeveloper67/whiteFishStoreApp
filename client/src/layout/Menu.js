@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 const useStyles = makeStyles(theme => ({
   styledLink: {
@@ -44,7 +45,7 @@ const Menu = ({ history }) => {
             <Button style={isActive(history, '/cart')}>
               Cart
               <Badge color="secondary" style={{ marginLeft: '7px' }}>
-                <FontAwesomeIcon icon="shopping-basket" />
+                <FontAwesomeIcon icon={faShoppingCart} />
               </Badge>
             </Button>
           </Link>

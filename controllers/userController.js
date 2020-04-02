@@ -31,3 +31,15 @@ exports.getAllUsers = asyncMiddleware(async (req, res, next) => {
 
   res.json(users);
 });
+
+// Get userId from authController.protect
+exports.getMe = (req, res, next) => {
+  req.profile = req.user;
+
+  next();
+};
+
+// GET Auth User
+exports.getUser = asyncMiddleware((req, res, next) => {
+  return res.json(req.profile);
+});

@@ -18,6 +18,7 @@ import Menu from './layout/Menu';
 
 // AUTH
 import Register from './auth/Register';
+import SignIn from './auth/SignIn';
 
 const theme = createMuiTheme({
   palette: {
@@ -47,12 +48,15 @@ const App = () => {
           <Menu />
           <Route exact path="/" component={Landing} />
           <ReduxToastr
+            timeOut={4000}
             position="bottom-right"
             transitionIn="fadeIn"
             transitionOut="fadeOut"
+            progressBar
           />
           <Switch>
             <Route exact path="/signup" component={Register} />
+            <Route exact path="/signin" component={SignIn} />
           </Switch>
         </Router>
       </MuiThemeProvider>
