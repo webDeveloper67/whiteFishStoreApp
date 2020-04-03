@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 
@@ -11,14 +11,23 @@ import { purple, deepPurple } from '@material-ui/core/colors';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import ReduxToastr from 'react-redux-toastr';
+import { loadUser } from './redux/actions/auth';
 
 // LAYOUT
 import Landing from './landing/LandingPage';
 import Menu from './layout/Menu';
 
+// Shop component
+import Shops from './Features/Shops/Shops';
+import Shop from './Features/Shop/Shop';
+
 // AUTH
 import Register from './auth/Register';
 import SignIn from './auth/SignIn';
+
+// Utils
+import _ from 'lodash';
+import setAuthToken from './utils/auth-helper';
 
 const theme = createMuiTheme({
   palette: {
@@ -40,7 +49,21 @@ const theme = createMuiTheme({
   }
 });
 
+let cookieValue = document.cookie.replace(
+  /(?:(?:^|.*;\s*)jwt=\s*\s*([^;]*).*$)|^.*$/,
+  '$1'
+);
+_.startsWith('jwt=', cookieValue);
+_.split(cookieValue, '; ', 2);
+if (cookieValue) {
+  setAuthToken(cookieValue);
+}
+
 const App = () => {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
   return (
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
@@ -57,6 +80,8 @@ const App = () => {
           <Switch>
             <Route exact path="/signup" component={Register} />
             <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/shops/all" component={Shops} />
+            <Route exact path="/shops/:shopId" component={Shop} />
           </Switch>
         </Router>
       </MuiThemeProvider>

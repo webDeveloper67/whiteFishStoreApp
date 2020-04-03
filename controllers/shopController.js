@@ -45,6 +45,9 @@ exports.shopByID = (req, res, next, id) => {
 exports.getAllShops = asyncMiddleware(async (req, res, next) => {
   const shops = await Shop.find();
 
+  if (!shops || shops.length <= 0) {
+    next(new ErrorResponse('There is no shops:)', 400));
+  }
   res.status(200).json(shops);
 });
 

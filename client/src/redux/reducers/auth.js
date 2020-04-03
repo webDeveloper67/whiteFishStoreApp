@@ -1,10 +1,17 @@
-import { LOAD_USER, REGISTER_SUCCESS, SIGN_IN_SUCCESS } from './../types';
+import {
+  LOAD_USER,
+  REGISTER_SUCCESS,
+  SIGN_IN_SUCCESS,
+  LOGOUT
+} from './../types';
 
 const initialState = {
-  loading: true,
   user: null,
   isAuthenticated: false,
-  token: document.cookie
+  token: document.cookie.replace(
+    /(?:(?:^|.*;\s*)jwt=\s*\s*([^;]*).*$)|^.*$/,
+    '$1'
+  )
 };
 
 export default function(state = initialState, action) {
@@ -14,7 +21,6 @@ export default function(state = initialState, action) {
     case LOAD_USER:
       return {
         ...state,
-        loading: false,
         isAuthenticated: true,
         user: payload
       };
@@ -24,10 +30,17 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ...payload,
-        isAuthenticated: true,
-        loading: false
+        isAuthenticated: true
       };
-
+    case LOGOUT:
+      document.cookie =
+        'jwt=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=127.0.0.1';
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        user: null
+      };
     default:
       return state;
   }

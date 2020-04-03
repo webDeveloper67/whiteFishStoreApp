@@ -6,17 +6,19 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   SIGN_IN_SUCCESS,
-  SIGN_IN_FAIL
+  SIGN_IN_FAIL,
+  LOGOUT
 } from './../types';
 import setAuthToken from './../../utils/auth-helper';
 import { toastr } from 'react-redux-toastr';
 
 export const loadUser = () => async dispatch => {
-  var cookieValue = document.cookie.replace(
+  let cookieValue = document.cookie.replace(
     /(?:(?:^|.*;\s*)jwt=\s*\s*([^;]*).*$)|^.*$/,
     '$1'
   );
   _.startsWith('jwt=', cookieValue);
+
   _.split(cookieValue, '; ', 2);
 
   if (cookieValue) {
@@ -106,11 +108,17 @@ export const signin = ({ email, password }, history) => async dispatch => {
   } catch (error) {
     let signInErr = error.response.data.message;
 
-    console.log(signInErr.message);
-
     dispatch({
       type: SIGN_IN_FAIL
     });
     toastr.error(signInErr);
   }
+};
+
+export const logout = history => dispatch => {
+  dispatch({
+    type: LOGOUT
+  });
+  toastr.info('Success', 'successfully signed Out.');
+  history.push('/');
 };

@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Landing = () => {
+  const classes = useStyles();
   return (
     <Fragment>
       <div>

@@ -11,6 +11,7 @@ router
   .route('/by/:userId')
   .post(
     authController.protect,
+    authController.isAuthorization,
     userController.isSeller,
     shopController.createShop
   )

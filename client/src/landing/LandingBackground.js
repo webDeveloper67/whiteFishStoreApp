@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { ScrollTo } from 'react-scroll-to';
 
 const useStyles = makeStyles(theme => ({
   mainFeaturedPost: {
@@ -81,21 +85,36 @@ const LandingBackground = props => {
             <Typography variant="h5" color="inherit" paragraph>
               {post.description}
             </Typography>
-            <Button
-              className={classes.margin}
-              variant="contained"
-              color="primary"
-            >
-              {post.signUpBut}
-            </Button>
-            <Button
-              className={classes.margin}
-              variant="contained"
-              color="secondary"
-              onClick={() => history.push('/signin')}
-            >
-              {post.signInBut}
-            </Button>
+            {!props.auth.isAuthenticated &&
+              <Fragment>
+                <Button
+                  className={classes.margin}
+                  variant="contained"
+                  color="primary"
+                  onClick={() => history.push('/signup')}
+                >
+                  {post.signUpBut}
+                </Button>
+                <Button
+                  className={classes.margin}
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => history.push('/signin')}
+                >
+                  {post.signInBut}
+                </Button>
+              </Fragment>}
+            {props.auth.isAuthenticated &&
+              <ScrollTo>
+                {({ scroll }) =>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => scroll({ y: 500, smooth: true })}
+                  >
+                    {post.latestBut}
+                  </Button>}
+              </ScrollTo>}
           </div>
         </Grid>
       </Grid>
@@ -103,4 +122,8 @@ const LandingBackground = props => {
   );
 };
 
-export default LandingBackground;
+const mapState = state => ({
+  auth: state.auth
+});
+
+export default compose(withRouter, connect(mapState))(LandingBackground);

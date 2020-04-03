@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors');
 const app = express();
 const morgan = require('morgan');
 const shopRoutes = require('./routes/shopRoutes');
@@ -9,6 +10,9 @@ const ErrorResponse = require('./helpers/ErrorResponse');
 
 // to parse the body of req
 app.use(express.json());
+
+// CORS-enabled
+app.use(cors());
 
 // show logs to the console
 if (process.env.NODE_ENV === 'development') {

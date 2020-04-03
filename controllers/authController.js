@@ -86,3 +86,15 @@ exports.protect = asyncMiddleware(async (req, res, next) => {
     return next(new ErrorResponse('Not authorized User!!', 401));
   }
 });
+
+exports.isAuthorization = (req, res, next) => {
+  const authorized =
+    req.profile &&
+    req.user &&
+    req.profile._id.toString() === req.user._id.toString();
+
+  if (!authorized) {
+    return next(new ErrorResponse('User is not authorized', 403));
+  }
+  next();
+};
