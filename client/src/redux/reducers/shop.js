@@ -1,4 +1,4 @@
-import { LIST_SHOPS, GET_SHOP, CREATE_SHOP } from './../types';
+import { LIST_SHOPS, GET_SHOP, CREATE_SHOP, OWNER_SHOPS } from './../types';
 
 const initialState = {
   newShop: [],
@@ -25,6 +25,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         shop: payload
+      };
+    case OWNER_SHOPS:
+      return {
+        ...state,
+        ownerShops: payload
       };
     default:
       return state;

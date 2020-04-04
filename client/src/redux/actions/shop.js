@@ -4,7 +4,10 @@ import {
   ERROR_SHOPS,
   GET_SHOP,
   CREATE_SHOP,
-  NEW_SHOP_ERROR
+  NEW_SHOP_ERROR,
+  OWNER_SHOPS,
+  OWNER_SHOPS_ERROR,
+  UPDATE_SHOP
 } from './../types';
 import { toastr } from 'react-redux-toastr';
 
@@ -37,7 +40,7 @@ export const getShop = shopId => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.response.data, '😌');
   }
 };
 
@@ -59,10 +62,62 @@ export const createShop = (userId, shopData, history) => async dispatch => {
     });
     history.push('/seller/shops');
   } catch (error) {
-    console.log(error.response.data);
+    let createShopErr = error.response.data.message;
 
     dispatch({
       type: NEW_SHOP_ERROR
     });
+
+    toastr.error(createShopErr);
+  }
+};
+
+// List Shops By Owner
+export const listShopByOwner = userId => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  try {
+    const res = await axios.get(`/api/v1/shops/by/${userId}`, config);
+
+    dispatch({
+      type: OWNER_SHOPS,
+      payload: res.data
+    });
+  } catch (error) {
+    let listShopByOwnErr = error.response.data.message;
+
+    dispatch({
+      type: OWNER_SHOPS_ERROR
+    });
+
+    toastr.error(listShopByOwnErr);
+  }
+};
+
+// Update Shop
+export const updateShop = (shopId, shop, history) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  };
+  const body = shop;
+
+  try {
+    const res = await axios.put(`/api/v1/shops/${shopId}`, body, config);
+
+    dispatch({
+      type: UPDATE_SHOP,
+      payload: res.data
+    });
+
+    toastr.success('Success', 'Shop successfully Updated.');
+    history.push('/seller/shops');
+  } catch (error) {
+    console.log(error.response.data, '🤓');
   }
 };

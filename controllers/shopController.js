@@ -12,23 +12,26 @@ const resolvedImg = path.resolve(shopImage);
 exports.createShop = asyncMiddleware((req, res, next) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
-  form.parse(req, async (err, fields, files) => {
+  form.parse(req, (err, fields, files) => {
     if (err) {
       return next(new ErrorResponse('Image could not be uploaded.', 401));
     }
 
-    let newShop = new Shop(fields);
+    let shop = new Shop(fields);
 
-    newShop.owner = req.user;
+    shop.owner = req.user;
 
     if (files.shopImg) {
-      newShop.shopImg.data = fs.readFileSync(files.shopImg.path);
-      newShop.shopImg.contentType = files.shopImg.type;
+      shop.shopImg.data = fs.readFileSync(files.shopImg.path);
+      shop.shopImg.contentType = files.shopImg.type;
     }
 
-    const shop = await newShop.save();
-
-    return res.status(200).json(shop);
+    shop.save((err, result) => {
+      if (err) {
+        return next(new ErrorResponse(err, 400));
+      }
+      res.status(200).json(result);
+    });
   });
 });
 

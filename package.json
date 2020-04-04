@@ -4,16 +4,14 @@
   "description": "an app that users can easily manage their shops and products",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js",
+    "start": "node ./server.js",
+    "server": "nodemon ./server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "keywords": [
-    "shop"
-  ],
+  "keywords": ["shop"],
   "author": "mDee",
   "license": "MIT",
   "dependencies": {

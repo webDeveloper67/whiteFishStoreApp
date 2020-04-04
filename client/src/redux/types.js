@@ -14,3 +14,9 @@ export const ERROR_SHOPS = 'ERROR_SHOPS';
 export const GET_SHOP = 'GET_SHOP';
 export const CREATE_SHOP = 'CREATE_SHOP';
 export const NEW_SHOP_ERROR = 'NEW_SHOP_ERROR';
+
+export const OWNER_SHOPS = 'OWNER_SHOPS';
+export const OWNER_SHOPS_ERROR = 'OWNER_SHOPS_ERROR';
+
+export const UPDATE_SHOP = 'UPDATE_SHOP';
+export const UPDATE_SHOP_ERROR = 'UPDATE_SHOP_ERROR';

@@ -20,6 +20,9 @@ import Menu from './layout/Menu';
 // Shop component
 import Shops from './Features/Shops/Shops';
 import Shop from './Features/Shop/Shop';
+import MyShops from './Features/OwnShops/MyShops';
+import NewShop from './Features/OwnShops/NewShop';
+import EditShop from './Features/OwnShops/EditShop';
 
 // AUTH
 import Register from './auth/Register';
@@ -28,6 +31,7 @@ import SignIn from './auth/SignIn';
 // Utils
 import _ from 'lodash';
 import setAuthToken from './utils/auth-helper';
+import PrivateRoute from './utils/PrivateRoute';
 
 const theme = createMuiTheme({
   palette: {
@@ -82,6 +86,13 @@ const App = () => {
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/shops/all" component={Shops} />
             <Route exact path="/shops/:shopId" component={Shop} />
+            <PrivateRoute exact path="/seller/shops" component={MyShops} />
+            <PrivateRoute exact path="/seller/shop/new" component={NewShop} />
+            <PrivateRoute
+              exact
+              path="/seller/shop/edit/:shopId"
+              component={EditShop}
+            />
           </Switch>
         </Router>
       </MuiThemeProvider>
