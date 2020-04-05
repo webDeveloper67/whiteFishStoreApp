@@ -18,11 +18,11 @@ import Landing from './landing/LandingPage';
 import Menu from './layout/Menu';
 
 // Shop component
-import Shops from './Features/Shops/Shops';
-import Shop from './Features/Shop/Shop';
-import MyShops from './Features/OwnShops/MyShops';
-import NewShop from './Features/OwnShops/NewShop';
-import EditShop from './Features/OwnShops/EditShop';
+import Shops from './shopFeatures/Shops/Shops';
+import Shop from './shopFeatures/Shop/Shop';
+import MyShops from './shopFeatures/OwnShops/MyShops';
+import NewShop from './shopFeatures/OwnShops/NewShop';
+import EditShop from './shopFeatures/OwnShops/EditShop';
 
 // AUTH
 import Register from './auth/Register';

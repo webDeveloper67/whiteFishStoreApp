@@ -18,19 +18,22 @@ exports.createProduct = asyncMiddleware((req, res, next) => {
       console.log(err);
       return next(new ErrorResponse('Image could not be uploaded.', 401));
     }
-    let newProduct = new Product(fields);
+    let product = new Product(fields);
 
-    newProduct.shop = req.shop;
-    newProduct.owner = req.user;
+    product.shop = req.shop;
+    product.owner = req.user;
 
     if (files.prodImg) {
-      newProduct.prodImg.data = fs.readFileSync(files.prodImg.path);
-      newProduct.prodImg.contentType = files.prodImg.type;
+      product.prodImg.data = fs.readFileSync(files.prodImg.path);
+      product.prodImg.contentType = files.prodImg.type;
     }
 
-    const product = await newProduct.save();
-
-    return res.status(200).json(product);
+    product.save((err, result) => {
+      if (err) {
+        return next(new ErrorResponse(err, 400));
+      }
+      res.status(200).json(result);
+    });
   });
 });
 

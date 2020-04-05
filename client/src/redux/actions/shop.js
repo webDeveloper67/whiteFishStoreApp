@@ -7,7 +7,9 @@ import {
   NEW_SHOP_ERROR,
   OWNER_SHOPS,
   OWNER_SHOPS_ERROR,
-  UPDATE_SHOP
+  UPDATE_SHOP,
+  DELETE_SHOP,
+  DELETE_SHOP_ERROR
 } from './../types';
 import { toastr } from 'react-redux-toastr';
 
@@ -40,7 +42,7 @@ export const getShop = shopId => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    console.log(error.response.data, '😌');
+    console.log(error.response.data);
   }
 };
 
@@ -119,5 +121,27 @@ export const updateShop = (shopId, shop, history) => async dispatch => {
     history.push('/seller/shops');
   } catch (error) {
     console.log(error.response.data, '🤓');
+  }
+};
+
+// Delete a Shop
+export const deleteShop = shopId => async dispatch => {
+  try {
+    await axios.delete(`/api/v1/shops/${shopId}`);
+
+    dispatch({
+      type: DELETE_SHOP,
+      payload: shopId
+    });
+
+    toastr.success('Success', 'Shop successfully deleted.');
+  } catch (error) {
+    const delShopErr = error.response.data.message;
+
+    dispatch({
+      type: DELETE_SHOP_ERROR
+    });
+
+    toastr.error(delShopErr);
   }
 };

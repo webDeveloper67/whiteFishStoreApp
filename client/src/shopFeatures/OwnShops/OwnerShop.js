@@ -11,7 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { connect } from 'react-redux';
-import { getShop } from './../../redux/actions/shop';
+import { getShop, deleteShop } from './../../redux/actions/shop';
 
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const OwnerShop = ({ ownShop, auth, getShop, match }) => {
+const OwnerShop = ({ ownShop, auth, getShop, match, deleteShop }) => {
   const classes = useStyles();
 
   const loadShop = useCallback(
@@ -65,7 +65,11 @@ const OwnerShop = ({ ownShop, auth, getShop, match }) => {
                   <FontAwesomeIcon icon={faEdit} />
                 </IconButton>
               </Link>
-              <IconButton aria-label="Delete" color="secondary">
+              <IconButton
+                aria-label="Delete"
+                color="secondary"
+                onClick={e => deleteShop(ownShop._id)}
+              >
                 <FontAwesomeIcon icon={faTrashAlt} />
               </IconButton>
             </ListItemSecondaryAction>}
@@ -76,4 +80,4 @@ const OwnerShop = ({ ownShop, auth, getShop, match }) => {
   );
 };
 
-export default connect(null, { getShop })(OwnerShop);
+export default connect(null, { getShop, deleteShop })(OwnerShop);

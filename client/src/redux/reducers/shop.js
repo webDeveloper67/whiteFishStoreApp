@@ -1,4 +1,10 @@
-import { LIST_SHOPS, GET_SHOP, CREATE_SHOP, OWNER_SHOPS } from './../types';
+import {
+  LIST_SHOPS,
+  GET_SHOP,
+  CREATE_SHOP,
+  OWNER_SHOPS,
+  DELETE_SHOP
+} from './../types';
 
 const initialState = {
   newShop: [],
@@ -30,6 +36,15 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ownerShops: payload
+      };
+    case DELETE_SHOP:
+      return {
+        ...state,
+        ownerShops: state.ownerShops.filter(shopEl => shopEl._id !== payload),
+        shops: state.shops.map(
+          shop => (shop._id === payload ? { ...shop } : state.shops)
+        ),
+        loading: false
       };
     default:
       return state;

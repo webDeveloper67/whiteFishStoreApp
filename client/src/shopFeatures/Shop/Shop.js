@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
-import { getShop } from './../../redux/actions/shop';
+import { getShop } from '../../redux/actions/shop';
 
 const useStyles = makeStyles(theme => ({
   root: {
