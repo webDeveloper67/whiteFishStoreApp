@@ -11,7 +11,11 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
 import { connect } from 'react-redux';
-import { listProductByShop, getProduct } from './../../redux/actions/product';
+import {
+  listProductByShop,
+  getProduct,
+  deleteProduct
+} from './../../redux/actions/product';
 
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -53,7 +57,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MyProducts = ({ listProductByShop, getProduct, products, shopId }) => {
+const MyProducts = ({
+  listProductByShop,
+  getProduct,
+  products,
+  shopId,
+  deleteProduct
+}) => {
   const classes = useStyles();
 
   useEffect(
@@ -110,9 +120,9 @@ const MyProducts = ({ listProductByShop, getProduct, products, shopId }) => {
                       Quantity: {product.quantity} | Price: ${product.price}
                     </Typography>
                   </div>
-                  {product.shop.map(el =>
-                    <ListItemSecondaryAction key={el._id}>
-                      <Link to={`/seller/${el._id}/${product._id}`}>
+                  {product.shop.map(shopEl =>
+                    <ListItemSecondaryAction key={shopEl._id}>
+                      <Link to={`/seller/${shopEl._id}/${product._id}`}>
                         <IconButton
                           aria-label="Edit"
                           color="primary"
@@ -121,7 +131,11 @@ const MyProducts = ({ listProductByShop, getProduct, products, shopId }) => {
                           <FontAwesomeIcon icon={faEdit} />
                         </IconButton>
                       </Link>
-                      <IconButton aria-label="Edit" color="secondary">
+                      <IconButton
+                        aria-label="Edit"
+                        color="secondary"
+                        onClick={() => deleteProduct(product._id, shopEl._id)}
+                      >
                         <FontAwesomeIcon icon={faTrashAlt} />
                       </IconButton>
                     </ListItemSecondaryAction>
@@ -136,4 +150,6 @@ const MyProducts = ({ listProductByShop, getProduct, products, shopId }) => {
   );
 };
 
-export default connect(null, { listProductByShop, getProduct })(MyProducts);
+export default connect(null, { listProductByShop, getProduct, deleteProduct })(
+  MyProducts
+);

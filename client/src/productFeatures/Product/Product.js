@@ -6,9 +6,9 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-// import Suggestions from './Suggestions';
+import Suggestions from './Suggestions';
 import { connect } from 'react-redux';
-import { getProduct } from './../../redux/actions/product';
+import { getProduct, listRelated } from './../../redux/actions/product';
 import AddToCart from './../../CartFeatures/Cart/AddToCart';
 
 // Font Awesome
@@ -67,14 +67,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Product = ({ getProduct, match, product }) => {
+const Product = ({ getProduct, match, product, listRelated, suggestions }) => {
   const classes = useStyles();
 
   useEffect(
     () => {
       getProduct(match.params.productId);
+      listRelated(match.params.productId);
     },
-    [getProduct, match.params.productId]
+    [getProduct, listRelated, match.params.productId]
   );
 
   let imageUrl;
@@ -138,18 +139,19 @@ const Product = ({ getProduct, match, product }) => {
               </div>
             </Card>}
         </Grid>
-        {/* {suggestions &&
+        {suggestions &&
           suggestions.length > 0 &&
           <Grid item xs={5} sm={5}>
             <Suggestions suggestions={suggestions} title="Related Products" />
-          </Grid>} */}
+          </Grid>}
       </Grid>
     </div>
   );
 };
 
 const mapState = state => ({
-  product: state.product.product
+  product: state.product.product,
+  suggestions: state.product.suggestions
 });
 
-export default connect(mapState, { getProduct })(Product);
+export default connect(mapState, { getProduct, listRelated })(Product);

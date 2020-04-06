@@ -6,7 +6,11 @@ import {
   CREATE_PRODUCT,
   CREATE_PRODUCT_ERROR,
   UPDATE_PRODUCT,
-  UPDATE_PRODUCT_ERROR
+  UPDATE_PRODUCT_ERROR,
+  DELETE_PRODUCT,
+  DELETE_PRODUCT_ERROR,
+  LIST_RELATED_ERROR,
+  LIST_RELATED
 } from './../types';
 import { toastr } from 'react-redux-toastr';
 
@@ -113,5 +117,40 @@ export const updateProduct = (
     });
 
     toastr.error(updateProdErr);
+  }
+};
+
+// Delete a product
+export const deleteProduct = (productId, shopId) => async dispatch => {
+  try {
+    await axios.delete(`/api/v1/products/${shopId}/${productId}`);
+
+    dispatch({
+      type: DELETE_PRODUCT,
+      payload: productId
+    });
+
+    toastr.success('Product successfully deleted.');
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+// List related products
+export const listRelated = productId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/v1/products/related/${productId}`);
+    dispatch({
+      type: LIST_RELATED,
+      payload: res.data
+    });
+  } catch (error) {
+    const listRelatedErr = error.response.data.message;
+
+    dispatch({
+      type: LIST_RELATED_ERROR
+    });
+
+    toastr.error(listRelatedErr);
   }
 };
