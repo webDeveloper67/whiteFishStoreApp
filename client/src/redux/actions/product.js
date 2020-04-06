@@ -10,9 +10,17 @@ import {
   DELETE_PRODUCT,
   DELETE_PRODUCT_ERROR,
   LIST_RELATED_ERROR,
-  LIST_RELATED
+  LIST_RELATED,
+  LIST_LATEST,
+  LIST_LATEST_ERROR,
+  LIST_CATEGORIES,
+  LIST_CATEGORIES_ERROR,
+  LIST_SEARCH,
+  LIST_RESULT,
+  LIST_RESULT_ERROR
 } from './../types';
 import { toastr } from 'react-redux-toastr';
+import queryString from 'query-string';
 
 // Create Product
 export const createProduct = (
@@ -152,5 +160,73 @@ export const listRelated = productId => async dispatch => {
     });
 
     toastr.error(listRelatedErr);
+  }
+};
+
+// List Latest Products
+export const listLatest = () => async dispatch => {
+  try {
+    const res = await axios.get('/api/v1/products/latest');
+
+    dispatch({
+      type: LIST_LATEST,
+      payload: res.data
+    });
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+
+// List Categories
+export const listCategories = () => async dispatch => {
+  try {
+    const res = await axios.get(`/api/v1/products/categories`);
+
+    dispatch({
+      type: LIST_CATEGORIES,
+      payload: res.data
+    });
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+
+// List Search
+export const listSearch = params => async dispatch => {
+  const query = queryString.stringify(params);
+  console.log(query, 'QUERY in listSearch action');
+
+  try {
+    const res = await axios.get(`/api/v1/products/?${query}`);
+
+    dispatch({
+      type: LIST_SEARCH,
+      payload: res.data
+    });
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+// List the result of Search
+export const listResults = params => async dispatch => {
+  const query = queryString.stringify(params);
+
+  try {
+    const res = await axios.get(`/api/v1/products/?${query}`);
+    console.log(res.data, 'in listResult action');
+
+    dispatch({
+      type: LIST_RESULT,
+      payload: res.data
+    });
+  } catch (error) {
+    const searchErr = error.response.data.message;
+
+    dispatch({
+      type: LIST_RESULT_ERROR
+    });
+
+    toastr.error(searchErr);
   }
 };

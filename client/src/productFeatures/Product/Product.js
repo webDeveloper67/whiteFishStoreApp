@@ -85,8 +85,6 @@ const Product = ({ getProduct, match, product, listRelated, suggestions }) => {
       : '/api/v1/products/defaultphoto';
   }
 
-  console.log(product && product.shop);
-
   return (
     <div className={classes.root}>
       <Grid container spacing={10}>

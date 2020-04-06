@@ -3,7 +3,11 @@ import {
   LIST_PRODUCT_BY_SHOP,
   CREATE_PRODUCT,
   DELETE_PRODUCT,
-  LIST_RELATED
+  LIST_RELATED,
+  LIST_CATEGORIES,
+  LIST_LATEST,
+  LIST_SEARCH,
+  LIST_RESULT
 } from './../types';
 
 const initialState = {
@@ -25,6 +29,7 @@ export default function(state = initialState, action) {
         product: payload
       };
     case LIST_PRODUCT_BY_SHOP:
+    case LIST_SEARCH:
       return {
         ...state,
         products: payload
@@ -40,9 +45,20 @@ export default function(state = initialState, action) {
         products: state.products.filter(prod => prod._id !== payload)
       };
     case LIST_RELATED:
+    case LIST_LATEST:
       return {
         ...state,
         suggestions: payload
+      };
+    case LIST_CATEGORIES:
+      return {
+        ...state,
+        categories: payload
+      };
+    case LIST_RESULT:
+      return {
+        ...state,
+        results: payload
       };
     default:
       return state;

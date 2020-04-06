@@ -101,7 +101,7 @@ exports.listProductByShop = asyncMiddleware(async (req, res, next) => {
     .select('-image');
 
   if (!products || products.length <= 0) {
-    return next(new ErrorResponse('Products not found!', 400));
+    return next(new ErrorResponse('Products not found!!!!', 400));
   }
 
   res.json(products);
