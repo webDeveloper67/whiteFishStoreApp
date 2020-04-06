@@ -24,6 +24,11 @@ import MyShops from './shopFeatures/OwnShops/MyShops';
 import NewShop from './shopFeatures/OwnShops/NewShop';
 import EditShop from './shopFeatures/OwnShops/EditShop';
 
+// Product component
+import Product from './productFeatures/Product/Product';
+import NewProduct from './productFeatures/OwnProducts/NewProduct';
+import EditProduct from './productFeatures/OwnProducts/EditProduct';
+
 // AUTH
 import Register from './auth/Register';
 import SignIn from './auth/SignIn';
@@ -86,12 +91,23 @@ const App = () => {
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/shops/all" component={Shops} />
             <Route exact path="/shops/:shopId" component={Shop} />
+            <Route exact path="/products/:productId" component={Product} />
             <PrivateRoute exact path="/seller/shops" component={MyShops} />
             <PrivateRoute exact path="/seller/shop/new" component={NewShop} />
             <PrivateRoute
               exact
               path="/seller/shop/edit/:shopId"
               component={EditShop}
+            />
+            <PrivateRoute
+              exact
+              path="/seller/:shopId/products/new"
+              component={NewProduct}
+            />
+            <PrivateRoute
+              exact
+              path="/seller/:shopId/:productId"
+              component={EditProduct}
             />
           </Switch>
         </Router>

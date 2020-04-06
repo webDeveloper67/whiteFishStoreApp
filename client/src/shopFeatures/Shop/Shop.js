@@ -6,7 +6,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
-import { getShop } from '../../redux/actions/shop';
+import { getShop } from './../../redux/actions/shop';
+import { listProductByShop } from './../../redux/actions/product';
+import Products from './../../productFeatures/Product/Products';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,14 +43,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Shop = ({ getShop, match, shop: { shop } }) => {
+const Shop = ({
+  getShop,
+  listProductByShop,
+  match,
+  shop: { shop },
+  product: { products }
+}) => {
   const classes = useStyles();
 
   useEffect(
     () => {
+      listProductByShop(match.params.shopId);
       getShop(match.params.shopId);
     },
-    [getShop, match]
+    [getShop, listProductByShop, match]
   );
 
   let shopImg;
@@ -96,7 +105,7 @@ const Shop = ({ getShop, match, shop: { shop } }) => {
             >
               Products
             </Typography>
-            {/* <Products products={products} searched={false} /> */}
+            <Products products={products} searched={false} />
           </Card>
         </Grid>
       </Grid>
@@ -105,7 +114,8 @@ const Shop = ({ getShop, match, shop: { shop } }) => {
 };
 
 const mapState = state => ({
-  shop: state.shop
+  shop: state.shop,
+  product: state.product
 });
 
-export default connect(mapState, { getShop })(Shop);
+export default connect(mapState, { getShop, listProductByShop })(Shop);

@@ -10,7 +10,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { updateShop } from './../../redux/actions/shop';
-// import MyProducts from './../product/MyProducts';
+import MyProducts from './../../productFeatures/OwnProducts/MyProducts';
 import Spinner from './../../layout/Spinner';
 
 const useStyles = makeStyles(theme => ({
@@ -186,7 +186,7 @@ const EditShop = ({ updateShop, match, singleShop, products, history }) => {
               </form>}
         </Grid>
         <Grid item xs={6} sm={6}>
-          {/* <MyProducts shopId={match.params.shopId} products={products} /> */}
+          <MyProducts shopId={match.params.shopId} products={products} />
         </Grid>
       </Grid>
     </div>
@@ -194,7 +194,8 @@ const EditShop = ({ updateShop, match, singleShop, products, history }) => {
 };
 
 const mapState = state => ({
-  singleShop: state.shop.shop
+  singleShop: state.shop.shop,
+  products: state.product.products
 });
 
 export default connect(mapState, { updateShop })(EditShop);
