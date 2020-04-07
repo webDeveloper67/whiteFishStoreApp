@@ -7,7 +7,9 @@ import {
   LIST_CATEGORIES,
   LIST_LATEST,
   LIST_SEARCH,
-  LIST_RESULT
+  LIST_RESULT,
+  LIST_RELATED_ERROR,
+  LIST_RESULT_ERROR
 } from './../types';
 
 const initialState = {
@@ -50,6 +52,11 @@ export default function(state = initialState, action) {
         ...state,
         suggestions: payload
       };
+    case LIST_RELATED_ERROR:
+      return {
+        ...state,
+        suggestions: []
+      };
     case LIST_CATEGORIES:
       return {
         ...state,
@@ -59,6 +66,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         results: payload
+      };
+    case LIST_RESULT_ERROR:
+      return {
+        ...state,
+        results: []
       };
     default:
       return state;

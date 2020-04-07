@@ -148,6 +148,8 @@ export const deleteProduct = (productId, shopId) => async dispatch => {
 export const listRelated = productId => async dispatch => {
   try {
     const res = await axios.get(`/api/v1/products/related/${productId}`);
+
+    console.log(res.data, 'listRelated');
     dispatch({
       type: LIST_RELATED,
       payload: res.data

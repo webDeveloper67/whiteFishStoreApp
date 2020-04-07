@@ -70,13 +70,10 @@ const useStyles = makeStyles(theme => ({
 const Product = ({ getProduct, match, product, listRelated, suggestions }) => {
   const classes = useStyles();
 
-  useEffect(
-    () => {
-      getProduct(match.params.productId);
-      listRelated(match.params.productId);
-    },
-    [getProduct, listRelated, match.params.productId]
-  );
+  useEffect(() => {
+    getProduct(match.params.productId);
+    listRelated(match.params.productId);
+  }, []);
 
   let imageUrl;
   if (product && product !== null) {
