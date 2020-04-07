@@ -46,3 +46,7 @@ export const LIST_SEARCH = 'LIST_SEARCH';
 
 export const LIST_RESULT = 'LIST_RESULT';
 export const LIST_RESULT_ERROR = 'LIST_RESULT_ERROR';
+
+export const GET_USER = 'GET_USER';
+export const UPDATE_ME = 'UPDATE_ME';
+export const DELETE_ME = 'DELETE_ME';

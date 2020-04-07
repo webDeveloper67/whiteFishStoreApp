@@ -33,6 +33,10 @@ import EditProduct from './productFeatures/OwnProducts/EditProduct';
 import Register from './auth/Register';
 import SignIn from './auth/SignIn';
 
+// Profile
+import Profile from './UserFeatures/Profile';
+import EditProfile from './UserFeatures/EditProfile';
+
 // Utils
 import _ from 'lodash';
 import setAuthToken from './utils/auth-helper';
@@ -92,6 +96,7 @@ const App = () => {
             <Route exact path="/shops/all" component={Shops} />
             <Route exact path="/shops/:shopId" component={Shop} />
             <Route exact path="/products/:productId" component={Product} />
+            <Route exact path="/user/:userId" component={Profile} />
             <PrivateRoute exact path="/seller/shops" component={MyShops} />
             <PrivateRoute exact path="/seller/shop/new" component={NewShop} />
             <PrivateRoute
@@ -108,6 +113,11 @@ const App = () => {
               exact
               path="/seller/:shopId/:productId"
               component={EditProduct}
+            />
+            <PrivateRoute
+              exact
+              path="/user/edit/:userId"
+              component={EditProfile}
             />
           </Switch>
         </Router>

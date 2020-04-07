@@ -68,8 +68,8 @@ exports.updateMe = asyncMiddleware(async (req, res, next) => {
 
   let user = req.profile;
 
-  const filteredBody = filterObj(req.body, 'name', 'email', 'seller');
-  user = _.extend(user, filteredBody);
+  // const filteredBody = filterObj(req.body, 'name', 'email', 'seller');
+  user = _.extend(user, req.body);
   user.updated = Date.now();
 
   const updatedUser = await user.save();

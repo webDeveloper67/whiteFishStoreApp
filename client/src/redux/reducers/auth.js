@@ -2,7 +2,9 @@ import {
   LOAD_USER,
   REGISTER_SUCCESS,
   SIGN_IN_SUCCESS,
-  LOGOUT
+  LOGOUT,
+  DELETE_ME,
+  UPDATE_ME
 } from './../types';
 
 const initialState = {
@@ -19,11 +21,13 @@ export default function(state = initialState, action) {
 
   switch (type) {
     case LOAD_USER:
+    case UPDATE_ME:
       return {
         ...state,
         isAuthenticated: true,
         user: payload
       };
+
     case REGISTER_SUCCESS:
     case SIGN_IN_SUCCESS:
       document.cookie = payload.token;
@@ -33,6 +37,7 @@ export default function(state = initialState, action) {
         isAuthenticated: true
       };
     case LOGOUT:
+    case DELETE_ME:
       document.cookie =
         'jwt=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=127.0.0.1';
       return {
