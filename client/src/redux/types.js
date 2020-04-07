@@ -50,3 +50,9 @@ export const LIST_RESULT_ERROR = 'LIST_RESULT_ERROR';
 export const GET_USER = 'GET_USER';
 export const UPDATE_ME = 'UPDATE_ME';
 export const DELETE_ME = 'DELETE_ME';
+
+export const ADD_CART_ITEM = 'ADD_CART_ITEM';
+export const RENEW_CART_ITEM = 'RENEW_CART_ITEM';
+export const UPDATE_CART_ITEM = 'UPDATE_CART_ITEM';
+export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
+export const DELETE_ALL_CART_ITEMS = 'DELETE_ALL_CART_ITEMS';

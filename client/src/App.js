@@ -9,7 +9,8 @@ import { purple, deepPurple } from '@material-ui/core/colors';
 
 // REDUX
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import { store, persistor } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 import ReduxToastr from 'react-redux-toastr';
 import { loadUser } from './redux/actions/auth';
 
@@ -81,45 +82,47 @@ const App = () => {
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
         <Router>
-          <Menu />
-          <Route exact path="/" component={Landing} />
-          <ReduxToastr
-            timeOut={4000}
-            position="bottom-right"
-            transitionIn="fadeIn"
-            transitionOut="fadeOut"
-            progressBar
-          />
-          <Switch>
-            <Route exact path="/signup" component={Register} />
-            <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/shops/all" component={Shops} />
-            <Route exact path="/shops/:shopId" component={Shop} />
-            <Route exact path="/products/:productId" component={Product} />
-            <Route exact path="/user/:userId" component={Profile} />
-            <PrivateRoute exact path="/seller/shops" component={MyShops} />
-            <PrivateRoute exact path="/seller/shop/new" component={NewShop} />
-            <PrivateRoute
-              exact
-              path="/seller/shop/edit/:shopId"
-              component={EditShop}
+          <PersistGate persistor={persistor}>
+            <Menu />
+            <Route exact path="/" component={Landing} />
+            <ReduxToastr
+              timeOut={4000}
+              position="bottom-right"
+              transitionIn="fadeIn"
+              transitionOut="fadeOut"
+              progressBar
             />
-            <PrivateRoute
-              exact
-              path="/seller/:shopId/products/new"
-              component={NewProduct}
-            />
-            <PrivateRoute
-              exact
-              path="/seller/:shopId/:productId"
-              component={EditProduct}
-            />
-            <PrivateRoute
-              exact
-              path="/user/edit/:userId"
-              component={EditProfile}
-            />
-          </Switch>
+            <Switch>
+              <Route exact path="/signup" component={Register} />
+              <Route exact path="/signin" component={SignIn} />
+              <Route exact path="/shops/all" component={Shops} />
+              <Route exact path="/shops/:shopId" component={Shop} />
+              <Route exact path="/products/:productId" component={Product} />
+              <Route exact path="/user/:userId" component={Profile} />
+              <PrivateRoute exact path="/seller/shops" component={MyShops} />
+              <PrivateRoute exact path="/seller/shop/new" component={NewShop} />
+              <PrivateRoute
+                exact
+                path="/seller/shop/edit/:shopId"
+                component={EditShop}
+              />
+              <PrivateRoute
+                exact
+                path="/seller/:shopId/products/new"
+                component={NewProduct}
+              />
+              <PrivateRoute
+                exact
+                path="/seller/:shopId/:productId"
+                component={EditProduct}
+              />
+              <PrivateRoute
+                exact
+                path="/user/edit/:userId"
+                component={EditProfile}
+              />
+            </Switch>
+          </PersistGate>
         </Router>
       </MuiThemeProvider>
     </Provider>
