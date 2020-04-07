@@ -27,11 +27,6 @@ const userSchema = new Schema({
     default: false
   },
   updated: Date,
-  active: {
-    type: Boolean,
-    default: true,
-    select: false
-  },
   created: {
     type: Date,
     default: Date.now
