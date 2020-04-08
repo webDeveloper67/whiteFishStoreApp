@@ -18,19 +18,17 @@ const OrderSchema = new Schema({
   products: [CartItemSchema],
   customer_name: {
     type: String,
-    trim: true,
-    required: 'Name is required'
+    trim: true
   },
   customer_email: {
     type: String,
     trim: true,
-    match: [/.+.+\..+/, 'Please fill a valid email address'],
-    required: 'Email is required'
+    match: [/.+.+\..+/, 'Please fill a valid email address']
   },
   deliveryAddress: {
     street: { type: String, required: 'Street is required' },
     city: { type: String, required: 'City is required' },
-    state: { type: String },
+    state: { type: String, required: 'State is required' },
     zipcode: { type: String, required: 'Zip Code is required' },
     country: { type: String, required: 'Country is required' }
   },
@@ -43,11 +41,9 @@ const OrderSchema = new Schema({
   user: { type: mongoose.Schema.ObjectId, ref: 'User' }
 });
 
-var collectionName = 'orders';
-
-const Order = mongoose.model('order', OrderSchema, collectionName);
+const Order = mongoose.model('order', OrderSchema);
 
 module.exports = {
-  Order: Order,
-  CartItem: CartItem
+  Order,
+  CartItem
 };

@@ -64,14 +64,17 @@ const Checkout = ({ user, cartItems }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(checkoutDetails, 'checkout Details');
+
   const handleCustomerChange = name => event => {
     checkoutDetails[name] = event.target.value || undefined;
     setCheckoutDetails({ ...checkoutDetails });
   };
 
   const handleAddressChange = name => event => {
-    checkoutDetails.deliveryAddress[name] = event.target.value || undefined;
-    setCheckoutDetails({ ...checkoutDetails });
+    const addVal = (checkoutDetails.deliveryAddress[name] =
+      event.target.value || undefined);
+    setCheckoutDetails({ ...checkoutDetails, addVal });
   };
 
   return (
