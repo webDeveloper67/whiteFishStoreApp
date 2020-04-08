@@ -30,6 +30,9 @@ import Product from './productFeatures/Product/Product';
 import NewProduct from './productFeatures/OwnProducts/NewProduct';
 import EditProduct from './productFeatures/OwnProducts/EditProduct';
 
+// Cart Component
+import Cart from './CartFeatures/CartItems/Cart';
+
 // AUTH
 import Register from './auth/Register';
 import SignIn from './auth/SignIn';
@@ -99,6 +102,7 @@ const App = () => {
               <Route exact path="/shops/:shopId" component={Shop} />
               <Route exact path="/products/:productId" component={Product} />
               <Route exact path="/user/:userId" component={Profile} />
+              <Route exact path="/cart" component={Cart} />
               <PrivateRoute exact path="/seller/shops" component={MyShops} />
               <PrivateRoute exact path="/seller/shop/new" component={NewShop} />
               <PrivateRoute
