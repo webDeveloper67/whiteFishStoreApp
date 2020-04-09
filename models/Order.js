@@ -41,9 +41,9 @@ const OrderSchema = new Schema({
   user: { type: mongoose.Schema.ObjectId, ref: 'User' }
 });
 
-const Order = mongoose.model('order', OrderSchema);
+const Order = mongoose.model('Order', OrderSchema);
 
 module.exports = {
-  Order,
-  CartItem
+  Order: Order,
+  CartItem: CartItem
 };

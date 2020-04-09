@@ -17,4 +17,5 @@ router
 
 router.param('userId', userController.userByID);
 router.param('orderId', orderController.orderByID);
+router.param('productId', productController.productByID);
 module.exports = router;

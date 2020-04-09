@@ -181,22 +181,20 @@ exports.getAllProducts = asyncMiddleware(async (req, res, next) => {
 
 // Decrease the number of Quantity Middleware
 exports.decreaseQuantity = asyncMiddleware((req, res, next) => {
-  if (req.body.order) {
-    let bulkOps = req.body.order.products.map(item => {
-      return {
-        updateOne: {
-          filter: { _id: item.product._id },
-          update: { $inc: { quantity: -item.quantity } }
-        }
-      };
-    });
+  let bulkOps = req.body.products.map(item => {
+    return {
+      updateOne: {
+        filter: { _id: item.product._id },
+        update: { $inc: { quantity: -item.quantity } }
+      }
+    };
+  });
 
-    const products = Product.bulkWrite(bulkOps);
+  const products = Product.bulkWrite(bulkOps);
 
-    if (!products) {
-      return next(new ErrorResponse('the Quantity can not be reduced!', 400));
-    }
-
-    next();
+  if (!products) {
+    return next(new ErrorResponse('the Quantity can not be reduced!', 400));
   }
+
+  next();
 });
