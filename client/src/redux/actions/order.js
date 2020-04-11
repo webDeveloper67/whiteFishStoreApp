@@ -1,14 +1,20 @@
 import axios from 'axios';
 import { CREATE_ORDER } from './../types';
 
-export const createOrder = (userId, order) => async dispatch => {
+export const createOrder = (
+  userId,
+  deliveryAddress,
+  order
+) => async dispatch => {
   try {
     const config = {
       headers: {
         'Content-Type': 'application/json'
       }
     };
-    const body = JSON.stringify({ order });
+
+    const body = JSON.stringify({ deliveryAddress, ...order });
+
     const res = await axios.post(`/api/v1/orders/${userId}`, body, config);
 
     dispatch({

@@ -36,6 +36,7 @@ const useStyles = makeStyles(theme => ({
 
 const PlaceOrder = ({
   checkoutDetails,
+  deliveryAddress,
   createOrder,
   user,
   deleteAllCartItem,
@@ -43,10 +44,9 @@ const PlaceOrder = ({
 }) => {
   const classes = useStyles();
 
-  console.log(checkoutDetails, 'checkoutDetails in placeorder');
-
   const placeOrder = () => {
-    createOrder(user._id, checkoutDetails);
+    console.log(checkoutDetails, 'checkoutcheckoutcheckoutcheckout');
+    createOrder(user._id, checkoutDetails, deliveryAddress);
   };
 
   if (order && order !== {}) {

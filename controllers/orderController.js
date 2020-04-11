@@ -1,23 +1,22 @@
 const ErrorResponse = require('./../helpers/ErrorResponse');
 const asyncMiddleware = require('./../helpers/asyncMiddleware');
-const { Order } = require('./../models/Order');
+const { Order, CartItem } = require('./../models/Order');
 
 // Create Order
-exports.createOrder = asyncMiddleware((req, res, next) => {
-  const obj = req.body;
-  // const { deliveryAddress: { city, state, street, zipcode, country } } = obj;
+exports.createOrder = asyncMiddleware(async (req, res, next) => {
+  // const order = new Order({
+  //   deliveryAddress: req.body.deliveryAddress,
+  //   user: req.user,
+  // });
 
-  const newOrder = new Order({
-    obj,
+  const order = new Order(req.body);
+  // order.user = req.user;
+  // order.user = req.user;
+  // order.deliveryAddress = req.body.deliveryAddress;
+  // order.products = req.body.products;
 
-    deliveryAddress: req.body.deliveryAddress,
-    user: req.user
-  });
-
-  // const newOrder = new Order({ obj });
-
-  console.log(newOrder, '😀');
-  newOrder.save((err, result) => {
+  console.log(order, '😀 order in orderController');
+  order.save((err, result) => {
     if (err) {
       return next(new ErrorResponse(err, 400));
     }

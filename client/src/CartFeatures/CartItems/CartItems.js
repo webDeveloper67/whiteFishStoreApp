@@ -101,9 +101,8 @@ const CartItems = props => {
   const classes = useStyles();
 
   const {
-    checkout,
-    setCheckout,
-    user,
+    isToggled,
+    toggleTrueFalse,
     auth,
     renewCartItem,
     updateCartItem,
@@ -111,7 +110,7 @@ const CartItems = props => {
   } = props;
 
   const openCheckout = () => {
-    setCheckout(true);
+    toggleTrueFalse(true);
   };
 
   const handleChange = index => event => {
@@ -131,7 +130,7 @@ const CartItems = props => {
     removeCartItem(index);
 
     if (props.cartItems.length === 0) {
-      setCheckout(false);
+      toggleTrueFalse(false);
     }
 
     renewCartItem(props.cartItems);
@@ -222,7 +221,7 @@ const CartItems = props => {
               <span className={classes.total}>
                 Total: ${getTotal()}
               </span>
-              {!checkout &&
+              {!isToggled &&
                 (auth.isAuthenticated
                   ? <Button
                       color="secondary"
