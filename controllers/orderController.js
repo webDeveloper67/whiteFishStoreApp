@@ -10,12 +10,19 @@ exports.createOrder = asyncMiddleware(async (req, res, next) => {
   // });
 
   const order = new Order(req.body);
+<<<<<<< HEAD
   // order.user = req.user;
   // order.user = req.user;
   // order.deliveryAddress = req.body.deliveryAddress;
   // order.products = req.body.products;
 
   console.log(order, '😀 order in orderController');
+=======
+  order.user = req.user;
+  order.deliveryAddress = req.body.deliveryAddress;
+
+  console.log(order, '😀');
+>>>>>>> 7ac9b6fa3597cf0f242b8e23173850a7c344cc4d
   order.save((err, result) => {
     if (err) {
       return next(new ErrorResponse(err, 400));
