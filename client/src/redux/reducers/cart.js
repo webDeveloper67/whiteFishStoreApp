@@ -17,7 +17,7 @@ export default function(state = initialState, action) {
     case ADD_CART_ITEM:
       return {
         ...state,
-        cart: [...state.cart, payload]
+        cart: [payload, ...state.cart]
       };
     case RENEW_CART_ITEM:
       return {

@@ -6,7 +6,7 @@ import {
   DELETE_ALL_CART_ITEMS
 } from './../types';
 
-export const addCartItem = (product, quantity = 1) => ({
+export const addCartItem = (product, quantity = 1, shop) => ({
   type: ADD_CART_ITEM,
   payload: { product, quantity, shop: product.shop._id }
 });

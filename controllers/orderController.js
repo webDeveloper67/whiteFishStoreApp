@@ -6,28 +6,15 @@ const { Order, CartItem } = require('./../models/Order');
 exports.createOrder = asyncMiddleware(async (req, res, next) => {
   const newOrder = new Order({
     user: req.user,
-    order: req.body,
+    // order: req.body,
     deliveryAddress: req.body.deliveryAddress,
-    products: req.body.products
+    products: req.body.products,
+    customer_name: req.body.customer_name,
+    customer_email: req.body.customer_email
   });
-  console.log(req.body, 'req.body in createOrder');
 
-  // const order = new Order(req.body);
-  // order.user = req.user;
-  // order.user = req.user;
-  // order.deliveryAddress = req.body.deliveryAddress;
-  // order.products = req.body.products;
-
-  // const newOrder = new Order({
-  //   deliveryAddress: req.body.order.deliveryAddress
-  // });
-  // newOrder.user = req.user;
-  // const order = await newOrder.save();
-
+  console.log(req.body.products, 'req.body in createOrder');
   console.log(newOrder, '😀 newOrder in orderController');
-
-  // send as response
-  // res.json(order);
 
   newOrder.save((err, result) => {
     if (err) {
@@ -48,3 +35,21 @@ exports.orderByID = (req, res, next, id) => {
       next();
     });
 };
+
+// List Order By Shop
+exports.listOrderByShop = asyncMiddleware((req, res, next) => {
+  Order.find({ 'products.shop': req.shop._id })
+    .populate({ path: 'products.product', select: '_id name price' })
+    .sort('-created')
+    .exec((err, orders) => {
+      if (err || orders.length <= 0) {
+        return next(new ErrorResponse(err, 400));
+      }
+      res.json(orders);
+    });
+});
+
+// Read Order via OrderID
+exports.readOrder = asyncMiddleware((req, res, next) => {
+  return res.json(req.order);
+});

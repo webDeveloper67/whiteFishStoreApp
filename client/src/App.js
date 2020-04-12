@@ -41,6 +41,9 @@ import SignIn from './auth/SignIn';
 import Profile from './UserFeatures/Profile';
 import EditProfile from './UserFeatures/EditProfile';
 
+// Order
+import Order from './OrderFeatures/Order/Order';
+
 // Utils
 import _ from 'lodash';
 import setAuthToken from './utils/auth-helper';
@@ -103,6 +106,7 @@ const App = () => {
               <Route exact path="/products/:productId" component={Product} />
               <Route exact path="/user/:userId" component={Profile} />
               <Route exact path="/cart" component={Cart} />
+              <Route exact path="/order/:orderId" component={Order} />
               <PrivateRoute exact path="/seller/shops" component={MyShops} />
               <PrivateRoute exact path="/seller/shop/new" component={NewShop} />
               <PrivateRoute

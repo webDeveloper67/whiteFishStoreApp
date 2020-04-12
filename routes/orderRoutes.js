@@ -13,7 +13,22 @@ router.route('/:userId').post(
   orderController.createOrder
 );
 
+router
+  .route('/shop/:shopId')
+  .get(
+    authController.protect,
+    shopController.isOwner,
+    orderController.listOrderByShop
+  );
+
+router.route('/:orderId').get(orderController.readOrder);
+
+// router
+//   .route('/user/:userId')
+//   .get(authController.protect, orderController.listOrderByUser);
+
 router.param('userId', userController.userByID);
-router.param('orderId', orderController.orderByID);
+router.param('shopId', shopController.shopByID);
 router.param('productId', productController.productByID);
+router.param('orderId', orderController.orderByID);
 module.exports = router;

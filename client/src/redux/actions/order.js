@@ -1,6 +1,13 @@
 import axios from 'axios';
-import { CREATE_ORDER } from './../types';
+import { toastr } from 'react-redux-toastr';
+import {
+  CREATE_ORDER,
+  CREATE_ORDER_ERROR,
+  READ_ORDER,
+  READ_ORDER_ERROR
+} from './../types';
 
+// Create Order
 export const createOrder = (
   userId,
   deliveryAddress,
@@ -21,8 +28,32 @@ export const createOrder = (
       payload: res.data
     });
   } catch (error) {
-    const errObj = error.response.data;
+    const createOrderErr = error.response.data.message;
 
-    console.log(errObj, 'in create Order action 😃');
+    dispatch({
+      type: CREATE_ORDER_ERROR
+    });
+
+    toastr.error(createOrderErr);
+  }
+};
+
+// Read specific Order via orderId
+export const readOrder = orderId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/v1/orders/${orderId}`);
+
+    dispatch({
+      type: READ_ORDER,
+      payload: res.data
+    });
+  } catch (error) {
+    const readOrderErr = error.response.data.message;
+
+    dispatch({
+      type: READ_ORDER_ERROR
+    });
+
+    toastr.error(readOrderErr);
   }
 };
