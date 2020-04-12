@@ -181,11 +181,7 @@ exports.getAllProducts = asyncMiddleware(async (req, res, next) => {
 
 // Decrease the number of Quantity Middleware
 exports.decreaseQuantity = asyncMiddleware((req, res, next) => {
-<<<<<<< HEAD
   let bulkOps = req.body.order.products.map(item => {
-=======
-  let bulkOps = req.body.products.map(item => {
->>>>>>> 7ac9b6fa3597cf0f242b8e23173850a7c344cc4d
     return {
       updateOne: {
         filter: { _id: item.product._id },

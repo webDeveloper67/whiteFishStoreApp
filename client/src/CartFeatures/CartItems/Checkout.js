@@ -85,9 +85,11 @@ const Checkout = ({
     setDeliveryAddress({ ...deliveryAddress });
   };
 
-  const placeOrder = e => {
-    console.log(e, `🚨`);
-    createOrder(user._id, deliveryAddress, checkoutDetails);
+  const placeOrder = () => {
+    if (user && user !== null && cartItems && cartItems !== []) {
+      const { _id } = user;
+      createOrder(_id, deliveryAddress, checkoutDetails);
+    }
   };
 
   if (order && order !== {}) {
@@ -98,7 +100,7 @@ const Checkout = ({
   }
 
   return (
-    <form autoComplete="off" onSubmit={e => placeOrder(e)}>
+    <form autoComplete="off" onSubmit={() => placeOrder()}>
       <Card className={classes.card}>
         <Typography type="title" className={classes.title}>
           Checkout
@@ -179,7 +181,7 @@ const Checkout = ({
             type="button"
             color="primary"
             variant="contained"
-            onClick={e => placeOrder(e)}
+            onClick={() => placeOrder()}
           >
             Submit
           </Button>

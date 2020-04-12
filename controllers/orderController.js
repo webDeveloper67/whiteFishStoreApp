@@ -4,26 +4,32 @@ const { Order, CartItem } = require('./../models/Order');
 
 // Create Order
 exports.createOrder = asyncMiddleware(async (req, res, next) => {
-  // const order = new Order({
-  //   deliveryAddress: req.body.deliveryAddress,
-  //   user: req.user,
-  // });
+  const newOrder = new Order({
+    user: req.user,
+    order: req.body,
+    deliveryAddress: req.body.deliveryAddress,
+    products: req.body.products
+  });
+  console.log(req.body, 'req.body in createOrder');
 
-  const order = new Order(req.body);
-<<<<<<< HEAD
+  // const order = new Order(req.body);
   // order.user = req.user;
   // order.user = req.user;
   // order.deliveryAddress = req.body.deliveryAddress;
   // order.products = req.body.products;
 
-  console.log(order, '😀 order in orderController');
-=======
-  order.user = req.user;
-  order.deliveryAddress = req.body.deliveryAddress;
+  // const newOrder = new Order({
+  //   deliveryAddress: req.body.order.deliveryAddress
+  // });
+  // newOrder.user = req.user;
+  // const order = await newOrder.save();
 
-  console.log(order, '😀');
->>>>>>> 7ac9b6fa3597cf0f242b8e23173850a7c344cc4d
-  order.save((err, result) => {
+  console.log(newOrder, '😀 newOrder in orderController');
+
+  // send as response
+  // res.json(order);
+
+  newOrder.save((err, result) => {
     if (err) {
       return next(new ErrorResponse(err, 400));
     }
