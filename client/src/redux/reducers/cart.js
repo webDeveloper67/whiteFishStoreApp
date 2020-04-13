@@ -19,14 +19,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         // cart: [payload, ...state.cart]
-        cart: [
-          {
-            product: payload.product,
-            quantity: payload.quantity,
-            shopId: payload.shopId,
-            ...state.cart
-          }
-        ]
+        // cart: [payload, state.cart]
+        cart: [payload, ...state.cart]
       };
     case RENEW_CART_ITEM:
       return {

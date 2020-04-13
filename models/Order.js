@@ -14,7 +14,7 @@ const CartItemSchema = new mongoose.Schema({
 const CartItem = mongoose.model('CartItem', CartItemSchema);
 
 const OrderSchema = new mongoose.Schema({
-  products: [CartItemSchema],
+  products: [{ type: mongoose.Schema.Types.Mixed, ref: 'CartItem' }],
   customer_name: {
     type: String,
     trim: true
