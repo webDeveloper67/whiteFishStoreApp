@@ -6,7 +6,6 @@ const { Order, CartItem } = require('./../models/Order');
 exports.createOrder = asyncMiddleware(async (req, res, next) => {
   const newOrder = new Order({
     user: req.user,
-    // order: req.body,
     deliveryAddress: req.body.deliveryAddress,
     products: req.body.products,
     customer_name: req.body.customer_name,
@@ -28,7 +27,7 @@ exports.createOrder = asyncMiddleware(async (req, res, next) => {
 exports.orderByID = (req, res, next, id) => {
   Order.findById(id)
     .populate('products.product', 'name price')
-    .populate('products.shop', 'name')
+    .populate('products.shop', 'name _id')
     .exec((err, order) => {
       if (err || !order) return next(new ErrorResponse(err, 400));
       req.order = order;

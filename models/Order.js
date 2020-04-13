@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const CartItemSchema = new Schema({
+const CartItemSchema = new mongoose.Schema({
   product: [{ type: mongoose.Schema.ObjectId, ref: 'Product' }],
   quantity: Number,
   shop: [{ type: mongoose.Schema.ObjectId, ref: 'Shop' }],
@@ -14,7 +13,7 @@ const CartItemSchema = new Schema({
 
 const CartItem = mongoose.model('CartItem', CartItemSchema);
 
-const OrderSchema = new Schema({
+const OrderSchema = new mongoose.Schema({
   products: [CartItemSchema],
   customer_name: {
     type: String,
@@ -44,6 +43,6 @@ const OrderSchema = new Schema({
 const Order = mongoose.model('Order', OrderSchema);
 
 module.exports = {
-  Order: Order,
-  CartItem: CartItem
+  Order,
+  CartItem
 };

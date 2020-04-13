@@ -30,5 +30,5 @@ shopSchema.pre('save', function(next) {
   next();
 });
 
-const Shop = mongoose.model('Shop', shopSchema, 'shops');
+const Shop = mongoose.model('Shop', shopSchema);
 module.exports = Shop;

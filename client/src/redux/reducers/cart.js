@@ -15,9 +15,18 @@ export default function(state = initialState, action) {
 
   switch (type) {
     case ADD_CART_ITEM:
+      console.log(payload, 'payload in ADD CART ITEM');
       return {
         ...state,
-        cart: [payload, ...state.cart]
+        // cart: [payload, ...state.cart]
+        cart: [
+          {
+            product: payload.product,
+            quantity: payload.quantity,
+            shopId: payload.shopId,
+            ...state.cart
+          }
+        ]
       };
     case RENEW_CART_ITEM:
       return {

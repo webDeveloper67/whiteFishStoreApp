@@ -6,10 +6,15 @@ import {
   DELETE_ALL_CART_ITEMS
 } from './../types';
 
-export const addCartItem = (product, quantity = 1, shop) => ({
-  type: ADD_CART_ITEM,
-  payload: { product, quantity, shop: product.shop._id }
-});
+export const addCartItem = (product, quantity = 1) => {
+  const shopId = Object.values(product.shop).map(el => el._id);
+  console.log(shopId, 'shopId is okey');
+
+  return {
+    type: ADD_CART_ITEM,
+    payload: { product, quantity, shopId }
+  };
+};
 
 export const renewCartItem = cartItems => ({
   type: RENEW_CART_ITEM,

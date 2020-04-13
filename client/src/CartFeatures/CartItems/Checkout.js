@@ -72,7 +72,6 @@ const Checkout = ({
       checkoutDetails.customer_name = user.name;
       checkoutDetails.customer_email = user.email;
       checkoutDetails.products = cartItems;
-      console.log(checkoutDetails.products, 'checkoutDetails.products');
       setCheckoutDetails({ ...checkoutDetails });
     }
   }, []);
