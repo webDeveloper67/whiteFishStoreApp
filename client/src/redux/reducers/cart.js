@@ -18,8 +18,6 @@ export default function(state = initialState, action) {
       console.log(payload, 'payload in ADD CART ITEM');
       return {
         ...state,
-        // cart: [payload, ...state.cart]
-        // cart: [payload, state.cart]
         cart: [payload, ...state.cart]
       };
     case RENEW_CART_ITEM:

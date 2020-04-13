@@ -108,12 +108,11 @@ const Order = ({ readOrder, match, order }) => {
     if (order.products) {
       return order.products.reduce((a, b) => {
         const quantity = b.status === 'Cancelled' ? 0 : b.quantity;
-        return a + quantity * b.product.map(prod => prod.price);
+        return a + quantity * b.product.price;
       }, 0);
     }
   };
 
-  console.log(order && order, 'order in orderDetails');
   return (
     <Card className={classes.card}>
       <Typography type="headline" component="h2" className={classes.title}>
@@ -139,26 +138,19 @@ const Order = ({ readOrder, match, order }) => {
                     <Card className={classes.cart}>
                       <CardMedia
                         className={classes.cover}
-                        image={
-                          '/api/v1/products/image/' +
-                          item.product.map(prod => prod._id)
-                        }
-                        title={item.product.map(prod => prod.name)}
+                        image={'/api/v1/products/image/' + item.product._id}
+                        title={item.product.name}
                       />
                       <div className={classes.details}>
                         <CardContent className={classes.content}>
-                          <Link
-                            to={
-                              '/products/' + item.product.map(prod => prod._id)
-                            }
-                          >
+                          <Link to={'/products/' + item.product._id}>
                             <Typography
                               type="title"
                               component="h3"
                               className={classes.productTitle}
                               color="primary"
                             >
-                              {item.product.map(prod => prod.name)}
+                              {item.product.name}
                             </Typography>
                           </Link>
                           <Typography
@@ -167,15 +159,13 @@ const Order = ({ readOrder, match, order }) => {
                             className={classes.itemShop}
                             color="primary"
                           >
-                            $ {item.product.map(prod => prod.price)} x{' '}
-                            {item.quantity}
+                            $ {item.product.price} x {item.quantity}
                           </Typography>
                           <span className={classes.itemTotal}>
-                            ${item.product.map(prod => prod.price) *
-                              item.quantity}
+                            ${item.product.price * item.quantity}
                           </span>
                           <span className={classes.itemShop}>
-                            Shop: {item.shop.map(sho => sho.name)}
+                            Shop:{item.product.shop.map(shopEl => shopEl.name)}
                           </span>
                           <Typography
                             type="subheading"

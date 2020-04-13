@@ -94,10 +94,7 @@ const Product = ({ getProduct, match, product, listRelated, suggestions }) => {
                 subheader={product.quantity > 0 ? 'In Stock' : 'Out of Stock'}
                 action={
                   <span className={classes.action}>
-                    <AddToCart
-                      cartStyle={classes.addCart}
-                      item={product && product}
-                    />
+                    <AddToCart cartStyle={classes.addCart} item={product} />
                   </span>
                 }
               />

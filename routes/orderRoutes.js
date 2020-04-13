@@ -7,11 +7,13 @@ const shopController = require('./../controllers/shopController');
 
 const router = express.Router();
 
-router.route('/:userId').post(
-  authController.protect,
-  // productController.decreaseQuantity,
-  orderController.createOrder
-);
+router
+  .route('/:userId')
+  .post(
+    authController.protect,
+    productController.decreaseQuantity,
+    orderController.createOrder
+  );
 
 router
   .route('/shop/:shopId')

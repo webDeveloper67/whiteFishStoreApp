@@ -8,8 +8,6 @@ import {
 
 export const addCartItem = (product, quantity = 1) => {
   let shopId = Object.values(product.shop).map(el => el._id);
-  shopId.toString().slice(0, 1);
-  console.log(shopId, 'shopId is okey');
 
   return {
     type: ADD_CART_ITEM,
