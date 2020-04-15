@@ -14,7 +14,8 @@ const CartItemSchema = new mongoose.Schema({
 const CartItem = mongoose.model('CartItem', CartItemSchema);
 
 const OrderSchema = new mongoose.Schema({
-  products: [{ type: mongoose.Schema.Types.Mixed, ref: 'CartItem' }],
+  // products: [{ type: mongoose.Schema.Types.Mixed, ref: 'CartItem' }],
+  products: [CartItemSchema],
   customer_name: {
     type: String,
     trim: true
@@ -42,7 +43,4 @@ const OrderSchema = new mongoose.Schema({
 
 const Order = mongoose.model('Order', OrderSchema);
 
-module.exports = {
-  Order,
-  CartItem
-};
+module.exports = { Order, CartItem };

@@ -48,6 +48,7 @@ const AddToCart = ({
 
   const addToCart = () => {
     addCartItem(item);
+
     setDirection({ redirect: true });
   };
   // };

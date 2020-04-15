@@ -56,8 +56,7 @@ const Checkout = ({
 
   const [checkoutDetails, setCheckoutDetails] = useState({
     customer_name: '',
-    customer_email: '',
-    products: []
+    customer_email: ''
   });
 
   const [deliveryAddress, setDeliveryAddress] = useState({

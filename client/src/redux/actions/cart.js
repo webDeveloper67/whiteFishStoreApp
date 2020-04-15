@@ -11,7 +11,7 @@ export const addCartItem = (product, quantity = 1) => {
 
   return {
     type: ADD_CART_ITEM,
-    payload: { product, quantity, shopId }
+    payload: { product, quantity, shop: shopId[0] }
   };
 };
 

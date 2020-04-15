@@ -1,10 +1,11 @@
 const ErrorResponse = require('./../helpers/ErrorResponse');
 const asyncMiddleware = require('./../helpers/asyncMiddleware');
-const { Order, CartItem } = require('./../models/Order');
+const { Order } = require('./../models/Order');
+const { CartItem } = require('./../models/Order');
 
 // Create Order
 exports.createOrder = asyncMiddleware(async (req, res, next) => {
-  const newOrder = new Order({
+  const order = new Order({
     user: req.user,
     deliveryAddress: req.body.deliveryAddress,
     products: req.body.products,
@@ -12,10 +13,10 @@ exports.createOrder = asyncMiddleware(async (req, res, next) => {
     customer_email: req.body.customer_email
   });
 
-  console.log(req.body.products, 'req.body in createOrder');
-  console.log(newOrder, '😀 newOrder in orderController');
+  // console.log(req.body.products, 'req.body in createOrder');
+  console.log(order.products, '😀 newOrder in orderController');
 
-  newOrder.save((err, result) => {
+  order.save((err, result) => {
     if (err) {
       return next(new ErrorResponse(err, 400));
     }
@@ -27,7 +28,7 @@ exports.createOrder = asyncMiddleware(async (req, res, next) => {
 exports.orderByID = (req, res, next, id) => {
   Order.findById(id)
     .populate('products.product', 'name price')
-    .populate('products.shop', 'name _id')
+    .populate('products.shop', 'name')
     .exec((err, order) => {
       if (err || !order) return next(new ErrorResponse(err, 400));
       req.order = order;
