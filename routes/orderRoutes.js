@@ -7,6 +7,8 @@ const shopController = require('./../controllers/shopController');
 
 const router = express.Router();
 
+router.route('/status_values').get(orderController.getStatusValues);
+
 router
   .route('/:userId')
   .post(
@@ -14,6 +16,10 @@ router
     productController.decreaseQuantity,
     orderController.createOrder
   );
+
+router
+  .route('/user/:userId')
+  .get(authController.protect, orderController.listOrderByUser);
 
 router
   .route('/shop/:shopId')

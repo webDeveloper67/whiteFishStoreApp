@@ -43,6 +43,7 @@ import EditProfile from './UserFeatures/EditProfile';
 
 // Order
 import Order from './OrderFeatures/Order/Order';
+import ByShopOrders from './OrderFeatures/Order/ByShopOrders';
 
 // Utils
 import _ from 'lodash';
@@ -128,6 +129,11 @@ const App = () => {
                 exact
                 path="/user/edit/:userId"
                 component={EditProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/seller/orders/:shop/:shopId"
+                component={ByShopOrders}
               />
             </Switch>
           </PersistGate>

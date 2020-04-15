@@ -4,7 +4,11 @@ import {
   CREATE_ORDER,
   CREATE_ORDER_ERROR,
   READ_ORDER,
-  READ_ORDER_ERROR
+  READ_ORDER_ERROR,
+  LIST_ORDER_BY_SHOP,
+  LIST_ORDER_BY_SHOP_ERROR,
+  STATUS_VALUES,
+  STATUS_VALUES_ERROR
 } from './../types';
 
 // Create Order
@@ -55,5 +59,45 @@ export const readOrder = orderId => async dispatch => {
     });
 
     toastr.error(readOrderErr);
+  }
+};
+
+// List Order By ShopId
+export const listOrderByShop = shopId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/v1/orders/shop/${shopId}`);
+
+    dispatch({
+      type: LIST_ORDER_BY_SHOP,
+      payload: res.data
+    });
+  } catch (error) {
+    const orderByShopErr = error.response.data.message;
+
+    dispatch({
+      type: LIST_ORDER_BY_SHOP_ERROR
+    });
+
+    toastr.error(orderByShopErr);
+  }
+};
+
+// Get Status Values in CartItem Schema
+export const getStatusValues = () => async dispatch => {
+  try {
+    const res = await axios.get(`/api/v1/orders/status_values`);
+
+    dispatch({
+      type: STATUS_VALUES,
+      payload: res.data
+    });
+  } catch (error) {
+    const statusValErr = error.response.data.message;
+
+    dispatch({
+      type: STATUS_VALUES_ERROR
+    });
+
+    toastr.error(statusValErr);
   }
 };

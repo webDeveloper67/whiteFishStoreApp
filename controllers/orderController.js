@@ -13,9 +13,6 @@ exports.createOrder = asyncMiddleware(async (req, res, next) => {
     customer_email: req.body.customer_email
   });
 
-  // console.log(req.body.products, 'req.body in createOrder');
-  console.log(order.products, '😀 newOrder in orderController');
-
   order.save((err, result) => {
     if (err) {
       return next(new ErrorResponse(err, 400));
@@ -35,6 +32,22 @@ exports.orderByID = (req, res, next, id) => {
       next();
     });
 };
+
+// Get Status Values in CartItem Schema
+exports.getStatusValues = (req, res) => {
+  res.json(CartItem.schema.path('status').enumValues);
+};
+
+// List Order By User
+exports.listOrderByUser = asyncMiddleware(async (req, res, next) => {
+  const orders = await Order.find({ user: req.profile._id }).sort('-created');
+
+  if (!orders || orders.length <= 0) {
+    return next(new ErrorResponse('orders are not found!', 400));
+  }
+
+  res.json(orders);
+});
 
 // List Order By Shop
 exports.listOrderByShop = asyncMiddleware((req, res, next) => {

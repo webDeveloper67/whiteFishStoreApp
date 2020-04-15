@@ -189,7 +189,7 @@ export const listCategories = () => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    console.log(error.response);
+    console.log(error.response.data.message);
   }
 };
 

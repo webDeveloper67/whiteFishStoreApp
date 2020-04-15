@@ -104,6 +104,8 @@ const Order = ({ readOrder, match, order }) => {
     readOrder(match.params.orderId);
   }, []);
 
+  console.log(order && order.products);
+
   const getTotal = () => {
     if (order.products) {
       return order.products.reduce((a, b) => {
@@ -138,19 +140,27 @@ const Order = ({ readOrder, match, order }) => {
                     <Card className={classes.cart}>
                       <CardMedia
                         className={classes.cover}
-                        image={'/api/v1/products/image/' + item.product._id}
-                        title={item.product.name}
+                        image={
+                          '/api/v1/products/image/' +
+                          item.product.map(prodEl => prodEl._id)
+                        }
+                        title={item.product.map(prodEl => prodEl.name)}
                       />
                       <div className={classes.details}>
                         <CardContent className={classes.content}>
-                          <Link to={'/products/' + item.product._id}>
+                          <Link
+                            to={
+                              '/products/' +
+                              item.product.map(prodEl => prodEl._id)
+                            }
+                          >
                             <Typography
                               type="title"
                               component="h3"
                               className={classes.productTitle}
                               color="primary"
                             >
-                              {item.product.name}
+                              {item.product.map(prodEl => prodEl.name)}
                             </Typography>
                           </Link>
                           <Typography
@@ -159,13 +169,16 @@ const Order = ({ readOrder, match, order }) => {
                             className={classes.itemShop}
                             color="primary"
                           >
-                            $ {item.product.price} x {item.quantity}
+                            $ {item.product.map(prodEl => prodEl.price)} x{' '}
+                            {item.quantity}
                           </Typography>
                           <span className={classes.itemTotal}>
-                            ${item.product.price * item.quantity}
+                            ${item.product.map(prodEl => prodEl.price) *
+                              item.quantity}
                           </span>
                           <span className={classes.itemShop}>
-                            Shop:{item.product.shop.map(shopEl => shopEl.name)}
+                            Shop:
+                            {item.shop.map(shopEl => shopEl.name)}
                           </span>
                           <Typography
                             type="subheading"

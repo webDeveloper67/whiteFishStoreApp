@@ -1,4 +1,9 @@
-import { CREATE_ORDER, READ_ORDER } from './../types';
+import {
+  CREATE_ORDER,
+  READ_ORDER,
+  LIST_ORDER_BY_SHOP,
+  STATUS_VALUES
+} from './../types';
 
 const initialState = {
   order: {},
@@ -19,6 +24,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         order: payload
+      };
+    case LIST_ORDER_BY_SHOP:
+      return {
+        ...state,
+        orders: payload
+      };
+    case STATUS_VALUES:
+      return {
+        ...state,
+        statusValues: payload
       };
     default:
       return state;
