@@ -8,7 +8,9 @@ import {
   LIST_ORDER_BY_SHOP,
   LIST_ORDER_BY_SHOP_ERROR,
   STATUS_VALUES,
-  STATUS_VALUES_ERROR
+  STATUS_VALUES_ERROR,
+  CANCEL_PRODUCT,
+  CANCEL_PRODUCT_ERROR
 } from './../types';
 
 // Create Order
@@ -99,5 +101,37 @@ export const getStatusValues = () => async dispatch => {
     });
 
     toastr.error(statusValErr);
+  }
+};
+
+// Cancel Product
+export const cancelProduct = (shopId, productId, product) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const body = JSON.stringify(product);
+
+    const res = await axios.put(
+      `/api/v1/orders/${shopId}/cancel/${productId}`,
+      body,
+      config
+    );
+
+    dispatch({
+      type: CANCEL_PRODUCT,
+      payload: res.data
+    });
+  } catch (error) {
+    const createOrderErr = error.response.data.message;
+
+    dispatch({
+      type: CANCEL_PRODUCT_ERROR
+    });
+
+    toastr.error(createOrderErr);
   }
 };

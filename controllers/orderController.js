@@ -66,3 +66,20 @@ exports.listOrderByShop = asyncMiddleware((req, res, next) => {
 exports.readOrder = asyncMiddleware((req, res, next) => {
   return res.json(req.order);
 });
+
+exports.updateOrder = asyncMiddleware((req, res, next) => {
+  Order.updateOne(
+    { 'products._id': req.body.cartItemId },
+    {
+      $set: {
+        'products.$.status': req.body.status
+      }
+    },
+    (err, order) => {
+      if (err) {
+        return next(new ErrorResponse(err, 400));
+      }
+      res.json(order);
+    }
+  );
+});

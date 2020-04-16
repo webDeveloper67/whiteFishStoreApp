@@ -31,9 +31,14 @@ router
 
 router.route('/:orderId').get(orderController.readOrder);
 
-// router
-//   .route('/user/:userId')
-//   .get(authController.protect, orderController.listOrderByUser);
+router
+  .route('/:shopId/cancel/:productId')
+  .put(
+    authController.protect,
+    shopController.isOwner,
+    productController.increaseQuantity,
+    orderController.updateOrder
+  );
 
 router.param('userId', userController.userByID);
 router.param('shopId', shopController.shopByID);

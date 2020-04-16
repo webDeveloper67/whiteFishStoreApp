@@ -59,8 +59,9 @@ const ByShopOrders = ({ match, orders, listOrderByShop }) => {
     loadShops();
   }, []);
 
-  console.log(orders, 'orders in shopOrder');
-
+  const updateOrders = (index, updatedOrder) => {
+    orders[index] = updatedOrder;
+  };
   return (
     <div>
       <Paper className={classes.root} elevation={4}>
@@ -92,6 +93,7 @@ const ByShopOrders = ({ match, orders, listOrderByShop }) => {
                       shopId={match.params.shopId}
                       order={order}
                       orderIndex={index}
+                      updateOrders={updateOrders}
                     />
                     <div className={classes.customerDetails}>
                       <Typography

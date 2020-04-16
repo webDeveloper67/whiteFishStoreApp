@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -7,8 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import { connect } from 'react-redux';
-import { getStatusValues } from './../../redux/actions/order';
-import { useEffect } from 'react';
+import { getStatusValues, cancelProduct } from './../../redux/actions/order';
 
 const useStyles = makeStyles(theme => ({
   nested: {
@@ -45,7 +44,9 @@ const ByProductOrderEdit = ({
   order,
   orderIndex,
   statusValues,
-  getStatusValues
+  getStatusValues,
+  cancelProduct,
+  updateOrders
 }) => {
   const classes = useStyles();
 
@@ -55,7 +56,27 @@ const ByProductOrderEdit = ({
     }
   }, []);
 
-  console.log(order && order.products && order, 'order in productOrderEdit');
+  console.log(
+    order && order.products && order.products,
+    'order && order.products'
+  );
+
+  const handleStatusChange = productIndex => event => {
+    order.products[productIndex].status = event.target.value;
+    console.log(productIndex, 'productIndex 😀');
+
+    let product = order.products[productIndex];
+
+    if (event.target.value === 'Cancelled') {
+      cancelProduct(shopId, product.product._id, {
+        cartItemId: product._id,
+        status: event.target.value,
+        quantity: product.quantity
+      });
+
+      updateOrders(orderIndex, order);
+    }
+  };
 
   return (
     <div>
@@ -97,7 +118,7 @@ const ByProductOrderEdit = ({
                         label="Update Status"
                         className={classes.textField}
                         value={item.status}
-                        // onChange={handleStatusChange(index)}
+                        onChange={handleStatusChange(index)}
                         SelectProps={{
                           MenuProps: {
                             className: classes.menu
@@ -127,4 +148,6 @@ const mapState = state => ({
   statusValues: state.order.statusValues
 });
 
-export default connect(mapState, { getStatusValues })(ByProductOrderEdit);
+export default connect(mapState, { getStatusValues, cancelProduct })(
+  ByProductOrderEdit
+);

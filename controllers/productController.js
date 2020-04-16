@@ -198,3 +198,18 @@ exports.decreaseQuantity = asyncMiddleware((req, res, next) => {
 
   next();
 });
+
+// Increase the number of quantity Middleware
+exports.increaseQuantity = asyncMiddleware((req, res, next) => {
+  Product.findByIdAndUpdate(
+    req.product._id,
+    { $inc: { quantity: req.body.quantity } },
+    { new: true }
+  ).exec((err, result) => {
+    console.log(req.body.quantity);
+    if (err) {
+      return next(new ErrorResponse(err, 400));
+    }
+    next();
+  });
+});
