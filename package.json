@@ -5,10 +5,10 @@
   "engines": {
     "node": "12.5.0"
   },
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node ./server.js",
-    "server": "nodemon ./server.js",
+    "start": "node server.js",
+    "server": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
     "client": "npm start --prefix client",
