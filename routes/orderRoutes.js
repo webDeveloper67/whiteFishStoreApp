@@ -29,6 +29,14 @@ router
     orderController.listOrderByShop
   );
 
+router
+  .route('/status/:shopId')
+  .put(
+    authController.protect,
+    shopController.isOwner,
+    orderController.updateOrder
+  );
+
 router.route('/:orderId').get(orderController.readOrder);
 
 router

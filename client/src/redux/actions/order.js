@@ -10,7 +10,9 @@ import {
   STATUS_VALUES,
   STATUS_VALUES_ERROR,
   CANCEL_PRODUCT,
-  CANCEL_PRODUCT_ERROR
+  CANCEL_PRODUCT_ERROR,
+  UPDATE_ORDER,
+  UPDATE_ORDER_ERROR
 } from './../types';
 
 // Create Order
@@ -133,5 +135,37 @@ export const cancelProduct = (shopId, productId, product) => async dispatch => {
     });
 
     toastr.error(createOrderErr);
+  }
+};
+
+// Update order
+export const updateOrder = (shopId, product) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const body = JSON.stringify(product);
+
+    const res = await axios.put(
+      `/api/v1/orders/status/${shopId}`,
+      body,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_ORDER,
+      payload: res.data
+    });
+  } catch (error) {
+    const updateOrderErr = error.response.data;
+
+    dispatch({
+      type: UPDATE_ORDER_ERROR
+    });
+
+    toastr.error(updateOrderErr);
   }
 };

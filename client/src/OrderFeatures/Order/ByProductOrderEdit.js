@@ -7,7 +7,11 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import { connect } from 'react-redux';
-import { getStatusValues, cancelProduct } from './../../redux/actions/order';
+import {
+  getStatusValues,
+  cancelProduct,
+  updateOrder
+} from './../../redux/actions/order';
 
 const useStyles = makeStyles(theme => ({
   nested: {
@@ -46,7 +50,8 @@ const ByProductOrderEdit = ({
   statusValues,
   getStatusValues,
   cancelProduct,
-  updateOrders
+  updateOrders,
+  updateOrder
 }) => {
   const classes = useStyles();
 
@@ -66,6 +71,13 @@ const ByProductOrderEdit = ({
         cartItemId: product._id,
         status: event.target.value,
         quantity: product.quantity
+      });
+
+      updateOrders(orderIndex, order);
+    } else {
+      updateOrder(shopId, {
+        cartItemId: product._id,
+        status: event.target.value
       });
 
       updateOrders(orderIndex, order);
@@ -142,6 +154,8 @@ const mapState = state => ({
   statusValues: state.order.statusValues
 });
 
-export default connect(mapState, { getStatusValues, cancelProduct })(
-  ByProductOrderEdit
-);
+export default connect(mapState, {
+  getStatusValues,
+  cancelProduct,
+  updateOrder
+})(ByProductOrderEdit);
