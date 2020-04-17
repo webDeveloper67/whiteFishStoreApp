@@ -2,6 +2,9 @@
   "name": "white-fish-store-app",
   "version": "1.0.0",
   "description": "an app that users can easily manage their shops and products",
+  "engines": {
+    "node": "12.5.0"
+  },
   "main": "server.js",
   "scripts": {
     "start": "node ./server.js",
