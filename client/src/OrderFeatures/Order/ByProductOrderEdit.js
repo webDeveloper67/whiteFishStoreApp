@@ -56,16 +56,11 @@ const ByProductOrderEdit = ({
     }
   }, []);
 
-  console.log(
-    order && order.products && order.products[0],
-    'order && order.products'
-  );
-
   const handleStatusChange = productIndex => event => {
+    console.log(order, 'order in handle');
     order.products[productIndex].status = event.target.value;
 
     let product = order.products[productIndex];
-    console.log(product, '🎭');
 
     if (event.target.value === 'Cancelled') {
       cancelProduct(shopId, product.product[0]._id, {
@@ -75,6 +70,7 @@ const ByProductOrderEdit = ({
       });
 
       updateOrders(orderIndex, order);
+      console.log(order, 'order in updateOrders');
     }
   };
 

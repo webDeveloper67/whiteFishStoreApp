@@ -206,10 +206,10 @@ exports.increaseQuantity = asyncMiddleware((req, res, next) => {
     { $inc: { quantity: req.body.quantity } },
     { new: true }
   ).exec((err, result) => {
-    console.log(req.body.quantity);
     if (err) {
       return next(new ErrorResponse(err, 400));
     }
+    console.log(result);
     next();
   });
 });

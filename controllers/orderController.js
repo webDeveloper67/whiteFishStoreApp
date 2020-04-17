@@ -33,11 +33,6 @@ exports.orderByID = (req, res, next, id) => {
     });
 };
 
-// Get Status Values in CartItem Schema
-exports.getStatusValues = (req, res) => {
-  res.json(CartItem.schema.path('status').enumValues);
-};
-
 // List Order By User
 exports.listOrderByUser = asyncMiddleware(async (req, res, next) => {
   const orders = await Order.find({ user: req.profile._id }).sort('-created');
@@ -68,6 +63,7 @@ exports.readOrder = asyncMiddleware((req, res, next) => {
 });
 
 exports.updateOrder = asyncMiddleware((req, res, next) => {
+  console.log(req.body.cartItemId, '🥶');
   Order.updateOne(
     { 'products._id': req.body.cartItemId },
     {
@@ -83,3 +79,8 @@ exports.updateOrder = asyncMiddleware((req, res, next) => {
     }
   );
 });
+
+// Get Status Values in CartItem Schema
+exports.getStatusValues = (req, res) => {
+  res.json(CartItem.schema.path('status').enumValues);
+};
