@@ -62,22 +62,22 @@ exports.readOrder = asyncMiddleware((req, res, next) => {
   return res.json(req.order);
 });
 
-exports.updateOrder = asyncMiddleware((req, res, next) => {
-  console.log(req.body.cartItemId, '🥶');
-  Order.updateOne(
+exports.updateOrder = asyncMiddleware(async (req, res, next) => {
+  const order = await Order.findOneAndUpdate(
     { 'products._id': req.body.cartItemId },
     {
       $set: {
         'products.$.status': req.body.status
       }
     },
-    (err, order) => {
-      if (err) {
-        return next(new ErrorResponse(err, 400));
-      }
-      res.json(order);
-    }
+    { new: true }
   );
+
+  if (!order) {
+    return next(new ErrorResponse('Order not found', 400));
+  }
+
+  res.json(order);
 });
 
 // Get Status Values in CartItem Schema

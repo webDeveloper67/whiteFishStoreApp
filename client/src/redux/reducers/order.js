@@ -2,7 +2,8 @@ import {
   CREATE_ORDER,
   READ_ORDER,
   LIST_ORDER_BY_SHOP,
-  STATUS_VALUES
+  STATUS_VALUES,
+  CANCEL_PRODUCT
 } from './../types';
 
 const initialState = {
@@ -19,6 +20,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         order: payload
+      };
+    case CANCEL_PRODUCT:
+      console.log(payload, 'payload for cancel product');
+      return {
+        ...state,
+        orders: state.orders.map(
+          (content, i) => (i === 1 ? { ...content, status: payload } : content)
+        )
       };
     case READ_ORDER:
       return {

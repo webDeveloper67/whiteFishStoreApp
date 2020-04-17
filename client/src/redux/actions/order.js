@@ -126,7 +126,7 @@ export const cancelProduct = (shopId, productId, product) => async dispatch => {
       payload: res.data
     });
   } catch (error) {
-    const createOrderErr = error.response.data.message;
+    const createOrderErr = error.response.data;
 
     dispatch({
       type: CANCEL_PRODUCT_ERROR

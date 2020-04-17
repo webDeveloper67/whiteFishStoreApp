@@ -57,7 +57,6 @@ const ByProductOrderEdit = ({
   }, []);
 
   const handleStatusChange = productIndex => event => {
-    console.log(order, 'order in handle');
     order.products[productIndex].status = event.target.value;
 
     let product = order.products[productIndex];
@@ -70,7 +69,6 @@ const ByProductOrderEdit = ({
       });
 
       updateOrders(orderIndex, order);
-      console.log(order, 'order in updateOrders');
     }
   };
 

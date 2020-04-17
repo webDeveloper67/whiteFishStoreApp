@@ -209,7 +209,6 @@ exports.increaseQuantity = asyncMiddleware((req, res, next) => {
     if (err) {
       return next(new ErrorResponse(err, 400));
     }
-    console.log(result);
     next();
   });
 });
