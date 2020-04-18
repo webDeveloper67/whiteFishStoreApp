@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "an app that users can easily manage their shops and products",
   "engines": {
-    "node": "12.5.0"
+    "node": "12.5.0",
+    "npm": "6.9.0"
   },
   "main": "app.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node app.js",
     "server": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
